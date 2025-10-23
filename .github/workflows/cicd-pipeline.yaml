@@ -3,7 +3,7 @@ name: Push to Docker to k8s
 on:
   push:
     branches:
-      - main
+      - master
   
   pull_request:
     branc;hes:
