@@ -2,6 +2,11 @@
 {% block title %}Short URL{% endblock %}
 
 {% block content %}
-    <h1>https://tinyurlanish.herokuapp.com/{{short_url_display}}</h1>
-    <a href="https://tinyurlanish.herokuapp.com/">BACK TO HOME</a>
+  {% set custom_domain = config['BASE_DOMAIN'] %}
+  <h1>
+    <a href="{{ custom_domain }}/{{ short_url_display }}">
+      {{ custom_domain }}/{{ short_url_display }}
+    </a>
+  </h1>
+  <a href="{{ url_for('home') }}">Back to Home</a>
 {% endblock %}

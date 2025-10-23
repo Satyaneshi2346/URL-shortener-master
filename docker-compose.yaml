@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  web:
+    image: tinny-url-shortener:latest
+    container_name: tinny_web
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - BASE_DOMAIN=http://tinny.local:5000
+      - DATABASE_URL=postgresql://tinny_user:tinny_pass@db:5432/tinny_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: tinny_db
+    restart: always
+    environment:
+      - POSTGRES_USER=tinny_user
+      - POSTGRES_PASSWORD=tinny_pass
+      - POSTGRES_DB=tinny_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

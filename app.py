@@ -5,8 +5,15 @@ import string
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# ✅ Database setup
+uri = os.environ.get("DATABASE_URL")
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = uri or 'sqlite:///urls.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# ✅ Base domain for generating short links
+app.config['BASE_DOMAIN'] = os.environ.get("BASE_DOMAIN", "http://127.0.0.1:5000")
 
 db = SQLAlchemy(app)
 
